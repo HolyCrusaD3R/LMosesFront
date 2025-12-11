@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function AboutUsSection() {
   return (
     <section className="mt-16 w-9/10 mx-auto px-4">
