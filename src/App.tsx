@@ -3,6 +3,7 @@ import HomePage from "./pages/HomePage";
 import Layout from "./layout/Layout";
 import ChatPage from "./pages/ChatPage";
 import NewsPage from "./pages/NewsPage";
+import AboutUsPage from "./pages/AboutUsPage";
 
 const router = createBrowserRouter([
   {
@@ -10,7 +11,7 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       { index: true, element: <HomePage /> },
-      // { path: "about", element: <AboutPage /> },
+      { path: "aboutus", element: <AboutUsPage /> },
       { path: "news", element: <NewsPage /> },
       { path: "chat", element: <ChatPage /> },
     ],
