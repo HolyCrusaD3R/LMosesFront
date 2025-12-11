@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 type ChatButtonProps = {
   children: ReactNode;
@@ -9,23 +10,30 @@ export default function ChatButton({ children }: ChatButtonProps) {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    try {
-      fetch(
-        "https://lmoses20251208164123-dhe7ekevh0c4gxgc.canadacentral-01.azurewebsites.net/api/clicks",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ timestamp: new Date().toISOString() }),
-        }
-      );
-    } catch (error) {
-      //   console.error("Failed to send click event:", error);
-    } finally {
-      //   Navigate to /chat regardless of request success
-      navigate("/chat");
+    const alreadySent = Cookies.get("lmoses-click-sent");
+
+    if (!alreadySent) {
+      try {
+        fetch(
+          "https://lmoses20251208164123-dhe7ekevh0c4gxgc.canadacentral-01.azurewebsites.net/api/clicks",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ timestamp: new Date().toISOString() }),
+          }
+        );
+
+        // Save cookie so we don't send again
+        Cookies.set("lmoses-click-sent", "true", { expires: 365 });
+      } catch (error) {
+        // silent fail is OK
+      }
     }
+
+    // Navigate immediately no matter what
+    navigate("/chat");
   };
 
   return (
