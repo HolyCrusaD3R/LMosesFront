@@ -1,5 +1,3 @@
-import ChatButton from "../UI/ChatButton";
-
 export default function WelcomeSection() {
   return (
     <div
